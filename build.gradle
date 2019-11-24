@@ -8,11 +8,8 @@ plugins {
 }
 openApiGenerate {
     generatorName = "spring"
-    //コンフィグ参照変更
     configFile = "$rootDir/specs/config.json".toString()
-    //API用意する
     inputSpec = "$rootDir/specs/petstore-v3.0.yaml".toString()
-    //inputSpec = "$rootDir/specs/openapi.yaml".toString()
     outputDir = "$buildDir/generated".toString()
     apiPackage = "org.openapi.example.api"
     invokerPackage = "org.openapi.example.invoker"
