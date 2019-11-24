@@ -1,0 +1,57 @@
+plugins {
+	// OpenAPGeneratePlugin追加
+	// https://github.com/OpenAPITools/openapi-generator/tree/master/modules/openapi-generator-gradle-plugin
+	id "org.openapi.generator" version "4.2.1"
+	id 'org.springframework.boot' version '2.2.1.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
+	id 'java'
+}
+openApiGenerate {
+    generatorName = "spring"
+    //コンフィグ参照変更
+    configFile = "$rootDir/specs/config.json".toString()
+    //API用意する
+    inputSpec = "$rootDir/specs/petstore-v3.0.yaml".toString()
+    //inputSpec = "$rootDir/specs/openapi.yaml".toString()
+    outputDir = "$buildDir/generated".toString()
+    apiPackage = "org.openapi.example.api"
+    invokerPackage = "org.openapi.example.invoker"
+    modelPackage = "org.openapi.example.model"
+    configOptions = [
+        dateLibrary: "java8"
+    ]
+    systemProperties = [
+        modelDocs: 'false'
+    ]
+}
+
+compileJava.dependsOn tasks.openApiGenerate
+sourceSets.main.java.srcDir "${openApiGenerate.outputDir.get()}/src/main/java"
+sourceSets.main.resources.srcDir "${openApiGenerate.outputDir.get()}/src/main/resources"
+
+repositories {
+
+sourceCompatibility = '11'
+targetCompatibility = '11'
+
+group = 'task'
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+	// OpenAPIで必要なライブラリ
+    compile group: 'com.google.code.gson', name: 'gson'
+    compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+    compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	compile group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.2'
+	compile group: 'org.openapitools', name: 'jackson-databind-nullable', version: '0.1.0'
+}
+
+test {
+	useJUnitPlatform()
+}
