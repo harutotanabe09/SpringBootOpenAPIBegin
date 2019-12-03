@@ -6,19 +6,11 @@ on:
     branches:
     - master
 
-# 変数定義
-steps:
-- name: Variables
-  run: echo ${GITHUB_SHA} ${RUN_MODE}
-  env:
-    RUN_MODE: production
-
 # ジョブ
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v1
     - name: Set up JDK 11
@@ -27,5 +19,8 @@ jobs:
         java-version: 11
     - name: Build with Gradle
       run: ./gradlew build
+
+
+
 
 
