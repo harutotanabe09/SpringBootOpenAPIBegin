@@ -19,13 +19,11 @@ jobs:
         java-version: 11
     - name: Build with Gradle
       run: ./gradlew build
-    - name: Build with Gradle
-      run: |
-        echo Hello
-
-    steps:
-      - name: Display the path
+    - name: Display the path
         run: echo $PATH
+        shell: bash
+    - name: Display the path
+        run: ls -la ./build/libs/
         shell: bash
 
 
