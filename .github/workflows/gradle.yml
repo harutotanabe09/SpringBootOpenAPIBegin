@@ -20,10 +20,4 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
     - name: Display the path
-        run: echo $PATH
-        shell: bash
-    - name: Display the path
         run: ls -la ./build/libs/
-        shell: bash
-
-
