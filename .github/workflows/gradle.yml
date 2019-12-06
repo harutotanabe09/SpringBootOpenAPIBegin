@@ -23,6 +23,9 @@ jobs:
       run: |
         echo Hello
 
-
+    steps:
+      - name: Display the path
+        run: echo $PATH
+        shell: bash
 
 
