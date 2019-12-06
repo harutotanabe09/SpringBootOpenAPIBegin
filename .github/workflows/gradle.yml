@@ -20,4 +20,4 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
     - name: Display the path
-        run: ls -la ./build/libs/
+      run: ls -la ./build/libs/
