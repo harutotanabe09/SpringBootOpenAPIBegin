@@ -21,5 +21,12 @@ jobs:
       run: ./gradlew build
     - name: Display the path
       run: ls -la ./build/libs/
-    - name: Display the path
-      run: curl -X POST --data-urlencode "payload={\"channel\": \"#cidi\", \"username\": \"webhookbot\", \"text\": \"これは GGG という名のボットから #cidi に投稿されています。\", \"icon_emoji\": \":ghost:\"}" https://hooks.slack.com/services/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
+- name: Slack notification
+  env:
+    SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+    SLACK_USERNAME: ThisIsMyUsername
+    SLACK_CHANNEL: cibi
+    SLACK_OVERRIDE_MESSAGE: 'Custom message'
+  uses: Ilshidur/action-slack@master
+  with:
+    args: 'A new commit has been pushed.'
