@@ -46,7 +46,9 @@ jobs:
       uses: aws-actions/amazon-ecr-login@v1
 
     - name: Build with Gradle
-      run: ./gradlew build
+      run: |
+      ./gradlew build
+      ls -la ./build/libs/
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
@@ -57,7 +59,7 @@ jobs:
         IMAGE_TAG: 1
       working-directory: ./docker
       run: |
-        ls -la ..
+        ls -la ../build/libs/
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
