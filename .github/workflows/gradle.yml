@@ -51,9 +51,8 @@ jobs:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         # カスタム必要
         ECR_REPOSITORY:　openapijava
-        IMAGE_TAG: ${{ github.sha }}
+        IMAGE_TAG: latest
       run: |
-        # カスタム必要
         cd .docker
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
