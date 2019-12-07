@@ -21,19 +21,17 @@ jobs:
     - name: Build with Gradle
       run: ./gradlew build
 
-    - name: Copy Jar
-      run: cp ./build/libs/openapi.jar ./docker/
-
-    - name: Deploy file to ssh key
-      uses: appleboy/scp-action@master
-      env:
-        HOST: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.KEY }}
-      with:
-        source: ./build/libs/openapi.jar
-        target: "test"
+    # SCPでデプロイ
+    #- name: Deploy file to ssh key
+    #  uses: appleboy/scp-action@master
+    #  env:
+    #    HOST: ${{ secrets.HOST }}
+    #    USERNAME: ${{ secrets.USERNAME }}
+    #    PORT: ${{ secrets.PORT }}
+    #    KEY: ${{ secrets.KEY }}
+    #  with:
+    #    source: ./build/libs/openapi.jar
+    #    target: "test"
 
     - name: Checkout
       uses: actions/checkout@v1
@@ -59,7 +57,7 @@ jobs:
         IMAGE_TAG: 1
       run: |
         cd ./docker/
-        ls -la
+        cp ./build/libs/openapi.jar ./docker/
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
