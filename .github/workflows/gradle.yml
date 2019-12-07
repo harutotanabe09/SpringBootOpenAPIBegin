@@ -18,9 +18,6 @@ jobs:
       with:
         java-version: 11
 
-    - name: Build with Gradle
-      run: ./gradlew build
-
     # SCPでデプロイ
     #- name: Deploy file to ssh key
     #  uses: appleboy/scp-action@master
@@ -47,6 +44,9 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       uses: aws-actions/amazon-ecr-login@v1
+
+    - name: Build with Gradle
+      run: ./gradlew build
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
