@@ -21,12 +21,13 @@ jobs:
       run: ./gradlew build
     - name: Display the path
       run: ls -la ./build/libs/
-    - name: Slack notification
+    - name: copy file via ssh key
+      uses: appleboy/scp-action@master
       env:
-        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-        SLACK_USERNAME: ThisIsMyUsername
-        SLACK_CHANNEL: cibi
-        SLACK_OVERRIDE_MESSAGE: 'Custom message'
-      uses: Ilshidur/action-slack@master
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.KEY }}
       with:
-        args: 'A new commit has been pushed.'
+        source: ./build/libs/openapi.jar
+        target: "test"
