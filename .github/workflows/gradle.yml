@@ -47,8 +47,8 @@ jobs:
 
     - name: Build with Gradle
       run: |
-      ./gradlew build
-      ls -la ./build/libs/
+        ./gradlew build
+        ls -la ./build/libs/
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
