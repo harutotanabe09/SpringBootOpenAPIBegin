@@ -22,8 +22,8 @@ jobs:
       run: ./gradlew build
 
     - name: Copy Jar
-      uses: cp ./build/libs/openapi.jar ./docker/
-      
+      run: cp ./build/libs/openapi.jar ./docker/
+
     - name: Deploy file to ssh key
       uses: appleboy/scp-action@master
       env:
