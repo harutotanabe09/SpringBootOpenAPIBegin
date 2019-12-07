@@ -56,8 +56,9 @@ jobs:
         ECR_REPOSITORY: openapijava
         IMAGE_TAG: 1
       run: |
-        cp ./build/libs/openapi.jar ./docker/
+        ls -la ./build/libs/
         cd ./docker/
+        ls -la
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
